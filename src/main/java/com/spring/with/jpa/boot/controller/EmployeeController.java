@@ -23,7 +23,7 @@ public class EmployeeController {
     public ResponseEntity<Employee>createEmployee(@RequestBody Employee employee)
     {
         Employee saveEmployee = employeeService.createEmployee(employee);
-        logger.info("employee data save into DB: "+saveEmployee);
+        logger.info("employee data save into DB:{} ",saveEmployee);
         return ResponseEntity.ok(saveEmployee);
     }
 
@@ -31,7 +31,7 @@ public class EmployeeController {
     public ResponseEntity<Employee>getEmployeeById(@PathVariable("get_employee_by_id") String employeeId)
     {
         Employee getEmployeeById = employeeService.getEmployeeById(employeeId);
-        logger.info("employee data found from DB: "+getEmployeeById);
+        logger.info("employee data found from DB:{} ",getEmployeeById);
         return ResponseEntity.ok(getEmployeeById);
     }
 
@@ -39,7 +39,7 @@ public class EmployeeController {
     public ResponseEntity<Employee>updateEmployeeById(@PathVariable("update_employee_by_id") String employeeId,@RequestBody Employee employee)
     {
         Employee updatedEmployee= employeeService.updateEmployeeById(employee,employeeId);
-        logger.info("employee data updated in DB: "+updatedEmployee);
+        logger.info("employee data updated in DB:{} ",updatedEmployee);
         return ResponseEntity.ok(updatedEmployee);
     }
 
@@ -47,7 +47,7 @@ public class EmployeeController {
     public ResponseEntity<Employee>deleteEmployeeById(@PathVariable("delete_employee_by_id") String employeeId)
     {
         Employee deletedEmployee= employeeService.deleteEmployeeById(employeeId);
-        logger.info("employee data deleted from DB: "+deletedEmployee);
+        logger.info("employee data deleted from DB:{} ",deletedEmployee);
         return ResponseEntity.ok(deletedEmployee);
     }
 
@@ -55,7 +55,7 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getAllEmployee()
     {
         List<Employee> allEmployee = employeeService.getAllEmployee();
-        logger.info("all employee data founded that is present in DB: "+allEmployee);
+        logger.info("all employee data founded that is present in DB:{} ",allEmployee);
         return ResponseEntity.ok(allEmployee);
     }
 
@@ -63,7 +63,7 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> addListOfEmployee(@RequestBody List<Employee>employeeList)
     {
         List<Employee> addedListOfEmployee = employeeService.addListOfEmployee(employeeList);
-        logger.info("all employee data added in DB: "+addedListOfEmployee);
+        logger.info("all employee data added in DB:{} ",addedListOfEmployee);
         return ResponseEntity.ok(addedListOfEmployee);
     }
 }
