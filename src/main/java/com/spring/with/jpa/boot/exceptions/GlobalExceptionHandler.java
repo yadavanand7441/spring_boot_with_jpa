@@ -9,14 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class GlobalException {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Map<String,Object>>notFoundException(ResourceNotFoundException resourceNotFoundException)
-    {
-        Map map=new HashMap<>();
+    public ResponseEntity<Map<String, Object>> notFoundException(ResourceNotFoundException resourceNotFoundException) {
+        Map<String, Object> map = new HashMap<>();
         map.put("status", HttpStatus.NOT_FOUND);
-        map.put("message",resourceNotFoundException.getMessage());
+        map.put("message", resourceNotFoundException.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
     }
 }

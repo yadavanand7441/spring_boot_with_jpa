@@ -11,29 +11,30 @@ import java.util.UUID;
 
 @Service
 public class EmployeeService {
-
-    @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     // adding single employee data with all defined field
-    public Employee createEmployee(Employee employee)
-    {
-        String randomEmployeeId= UUID.randomUUID().toString();
+    public Employee createEmployee(Employee employee) {
+        String randomEmployeeId = UUID.randomUUID().toString();
         employee.setId(randomEmployeeId);
         return employeeRepository.save(employee);
     }
 
     //fetching single employee with given id
-    public Employee getEmployeeById(String employeeId)
-    {
-        Employee employeeById = employeeRepository.findById(employeeId).orElseThrow(() ->
-                new ResourceNotFoundException("employee is not presented in database with given id: " + employeeId));
-        return employeeById;
+    public Employee getEmployeeById(String employeeId) {
+        return employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "employee is not presented in database with given id: " + employeeId));
     }
 
+
     //updating employee data with the help of employee id
-    public Employee updateEmployeeById(Employee employee,String employeeId)
-    {
+    public Employee updateEmployeeById(Employee employee, String employeeId) {
         Employee updatedEmployee = employeeRepository.findById(employeeId).orElseThrow(() ->
                 new ResourceNotFoundException("employee data is not found with given id: " + employeeId));
 
@@ -47,8 +48,7 @@ public class EmployeeService {
     }
 
     //deleting employee by id
-    public Employee deleteEmployeeById(String employeeId)
-    {
+    public Employee deleteEmployeeById(String employeeId) {
         Employee deleteEmployeeById = employeeRepository.findById(employeeId).orElseThrow(() ->
                 new ResourceNotFoundException("employee data is not found for deletion with given id" + employeeId));
         employeeRepository.delete(deleteEmployeeById);
@@ -56,16 +56,13 @@ public class EmployeeService {
     }
 
     //fetching list of employees
-    public List<Employee>getAllEmployee()
-    {
+    public List<Employee> getAllEmployee() {
         return employeeRepository.findAll();
     }
 
     //adding list of employees
-    public List<Employee>addListOfEmployee(List<Employee>employees)
-    {
-        for (Employee employee:employees)
-        {
+    public List<Employee> addListOfEmployee(List<Employee> employees) {
+        for (Employee employee : employees) {
             employee.setId(UUID.randomUUID().toString());
         }
         return employeeRepository.saveAll(employees);

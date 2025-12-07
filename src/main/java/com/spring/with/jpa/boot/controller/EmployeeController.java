@@ -13,9 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/api/boot/jpa")
 public class EmployeeController {
-
-    @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     private Logger logger= LoggerFactory.getLogger(EmployeeController.class);
 
