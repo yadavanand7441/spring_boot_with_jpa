@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +32,8 @@ class EmployeeRepositoryTest {
 
         // verify
         Employee saved = employeeRepository.save(emp);
+
         assertTrue(employeeRepository.findById("E001").isPresent());
-        assertTrue(saved.getName().equals("Anand"));
+        assertEquals("Anand", saved.getName());  // ✅ Sonar issue fixed
     }
 }
