@@ -17,17 +17,19 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
-      - name: Build & Test
+      - name: Build & Unit Test
         run: mvn -B clean verify
-
-      - name: SonarCloud + Quality Gate
+      - name: Coverage Threshold Check (Jacoco)
+        run: mvn jacoco:check
+      - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B sonar:sonar \
-          -Dsonar.qualitygate.wait=true \
-          -Dsonar.login=${SONAR_TOKEN}
-
+          -Dsonar.projectKey=yadavanand7441_spring_boot_with_jpa \
+          -Dsonar.organization=yadavanand7441 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${SONAR_TOKEN} \
+          -Dsonar.qualitygate.wait=true
       - name: Deploy to QA
         run: echo "Deploying to QA environment..."
