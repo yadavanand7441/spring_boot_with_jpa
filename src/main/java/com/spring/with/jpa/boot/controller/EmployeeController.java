@@ -61,6 +61,7 @@ public class EmployeeController {
         return ResponseEntity.ok(allEmployee);
     }
 
+
     @PostMapping("/add_list_of_employee")
     public ResponseEntity<List<Employee>> addListOfEmployee(@RequestBody List<Employee>employeeList)
     {
