@@ -119,7 +119,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>jacoco-check</id>
+                        <id>check</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
@@ -141,6 +141,7 @@
                     </execution>
                 </executions>
             </plugin>
+
 
             <!-- Sonar Scanner -->
             <plugin>
