@@ -1,0 +1,33 @@
+name: QA Pipeline
+
+on:
+  push:
+    branches: [ "qa" ]
+  pull_request:
+    branches: [ "qa" ]
+
+jobs:
+  qa-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build & Test
+        run: mvn -B clean verify
+
+      - name: SonarCloud + Quality Gate
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B sonar:sonar \
+          -Dsonar.qualitygate.wait=true \
+          -Dsonar.login=${SONAR_TOKEN}
+
+      - name: Deploy to QA
+        run: echo "Deploying to QA environment..."
