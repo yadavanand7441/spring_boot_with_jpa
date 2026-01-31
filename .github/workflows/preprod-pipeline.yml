@@ -1,0 +1,43 @@
+name: Preprod Pipeline
+
+on:
+  push:
+    branches: [ "preprod" ]
+  pull_request:
+    branches: [ "preprod" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build & Unit Test
+        run: mvn -B clean verify
+
+      - name: Coverage Threshold Check (Jacoco)
+        run: |
+          mvn test jacoco:report
+          # yahan tum custom script likh sakte ho coverage threshold enforce karne ke liye
+          # example: agar coverage < 80% hai to exit 1
+
+      - name: SonarCloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B sonar:sonar \
+          -Dsonar.projectKey=yadavanand7441_spring_boot_with_jpa \
+          -Dsonar.organization=yadavanand7441 \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${SONAR_TOKEN} \
+          -Dsonar.qualitygate.wait=true
+
+      - name: Deploy to Preprod
+        run: echo "Deploying to Preprod environment..."
